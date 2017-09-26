@@ -3,7 +3,7 @@
 /**
  * 引导类.
  *
- * @author WangChengjin
+ * @author ylb
  */
 
 namespace Core;
@@ -24,32 +24,7 @@ class Main {
         return static::$instance;
     }
     
-	//是否是https 连接
-	private function isSSL(){
-		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 1)  //Apache  
-			return TRUE;  
-		elseif(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') //IIS  
-			return TRUE;  
-		elseif($_SERVER['SERVER_PORT'] == 443) //其他  
-			return TRUE;  
-		return FALSE;
-	}  
 	
-	//检查链接是否HTTPS
-	private function checkHttps($list)
-	{
-		if(empty($list) || !is_array($list))
-			return false;
-		foreach($list as $val)
-		{
-			if(!$this->isSSL() && strpos(strtolower($_SERVER['REQUEST_URI']),strtolower($val))!==false)
-			{
-				$url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-				header("Location: $url");
-				exit;
-			}
-		}
-	}
 	
     public function init($map) {
         date_default_timezone_set('Asia/Chongqing');
@@ -60,7 +35,6 @@ class Main {
         if (file_exists(SYS_ROOT . '/config.ini.php')) {
             require_once SYS_ROOT . '/config.ini.php';
         }
-		$this->checkHttps($HttpModel); //检查链接是否HTTPS
         $this->pathMap = $map;
         return $this;
     }

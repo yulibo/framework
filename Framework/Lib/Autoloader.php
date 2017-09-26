@@ -2,7 +2,7 @@
 /**
  * 自动加载类.
  * 
- * @author WangChengjin
+ * @author ylb
  */
 
 namespace Core\Lib;

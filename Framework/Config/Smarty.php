@@ -2,7 +2,7 @@
 /**
  * Description of Smarty
  *
- * @author WangChengjin
+ * @author ylb
  */
 
 namespace Core\Config;
