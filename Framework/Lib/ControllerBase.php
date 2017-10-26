@@ -23,22 +23,10 @@ class ControllerBase {
     protected static $instance;
 	
 	protected function __construct(){
-		$this->testUser(); //随机用户测试
 		$this->init();
 	}
 	
-	protected function testUser(){
-		if(!isset($_GET['rand'])){
-			return false;
-		}
-		$num = mt_rand(1,49999);
-		$_SESSION['user_info']['user_phone'] = 13550361902+$num;
-		$_SESSION['user_info']['user_id'] = $num;
-	}
-	
 	protected function init(){
-		\Module\Common::checkOnMobiel();//判断是否在手机端访问 mall
-		\Module\Common::setChannel(); //设置渠道号
 		SqlSafe::instance(); //sql注入 安全过滤
 	}
     
@@ -60,10 +48,14 @@ class ControllerBase {
     public function setToken($value){
         Sys::getCfg('Smarty')->token=$value;
     }
+	
+	
 	//模板解析前
 	protected function fetchStart(){
 		
 	}
+	
+	//模板渲染
     public function fetch($templateFile, $var) {
 		$this->fetchStart();
         $classPath = str_replace('\\', DIRECTORY_SEPARATOR, get_called_class());
@@ -80,6 +72,9 @@ class ControllerBase {
 	protected function fetchEnd(){
 		
 	}
+	
+	
+	//模板渲染返回
     public function fetchout($templateFile, $var) {	
         $classPath = str_replace('\\', DIRECTORY_SEPARATOR, get_called_class());
         $portion = explode(DIRECTORY_SEPARATOR, $classPath);
