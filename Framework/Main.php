@@ -105,20 +105,6 @@ class Main {
             }
         }
         try {
-            if (!get_magic_quotes_gpc()) {
-                \Module\Common::instance()->addslashesextended($_POST);
-                \Module\Common::instance()->addslashesextended($_GET);
-                \Module\Common::instance()->addslashesextended($_REQUEST);
-                \Module\Common::instance()->addslashesextended($_COOKIE);
-            }
-            $dao = new \Core\Config\ConfigBase();
-
-            if($dao->token){
-                if(!$dao->checkToken()){
-                    $dao = new \Core\Lib\ControllerBase();
-                    $dao->showMsg('表单令牌过期','',$dao::CTR_SHOW_MESSAGE,$dao::CTR_MODULE_MALL);
-                }
-            }
 			$class::instance()->$fun();
         } catch (\Exception $e) {
             \Core\Lib\MNLogger\EXLogger::instance()->log($e);
